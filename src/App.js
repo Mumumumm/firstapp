@@ -6,6 +6,7 @@ import Article from "./Article";
 
 import Head from './Head';
 import Art from './Art';
+import Navigator from './Navigator';
 
 // // Header컴포넌트 생성
 // // props 로 데이터 전달 받기
@@ -84,7 +85,7 @@ function App() {
 
       {/*Nav 컴포넌트 호출*/}
       {/* 배열을 넘기기 */}
-      <Nav topics={topics} onChangeMode={(id)=>{ alert(id);}}></Nav>
+      <Navigator topics={topics} onChangeMode={(id)=>{ alert(id);}}></Navigator>
 
       {/* Article 컴포넌트 호출 */}
       {/* 2번 찍힐수 있다 */}
