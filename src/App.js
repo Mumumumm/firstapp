@@ -1,25 +1,185 @@
 import logo from './logo.svg';
 import './App.css';
+import Header from "./Header";
+import Nav from "./Nav";
+import Article from "./Article";
+
+import Head from './Head';
+import Art from './Art';
+
+// // Header컴포넌트 생성
+// // props 로 데이터 전달 받기
+// function Header(props){ // {title : "ReAct", onChangeMode:(()=>{alert("Header")})}
+//   return (
+//     <header> 
+//       {/* {이쪽으로 하단 header 속성을 매개변수를 통해 적용} */}
+//       <h1><a href="/" onClick={(e)=>{
+//         // preventDefault() 기본기능 제거
+//         e.preventDefault();
+//         // elart 기능 실행
+//         props.onChangeMode();
+//         }}>{props.title}</a></h1> 
+//       <h1><a href="/">{props.desc}</a></h1> 
+//     </header>
+//   );
+// }
+
+// //-----------------------------------------------------------------------------------------------------------
+
+// // Nav 컴포넌트 생성
+// function Nav(props){ // { topics : [...] 배열을 속성으로 갖는 객체로 전달받음 , onChangeMode: ((id)=>{alert(id)})}
+//   const lis = []; // 배열의 객체를 받는법 빈배열 먼저 만들기
+//   for(let i=0; i < props.topics.length; i++){ // 전달받은 prips의 topics의 길이
+//     let t = props.topics[i]; // 객체 하나가 들어간다
+//     // t의 title과 body가 배열에 들어간다
+//     // <a href={'rede/'+t.id}> t.id id 가 1,2,3 으로 적어놨다
+//     lis.push(
+//       <li key={t.id}>
+//         <a id={t.id} href={'rede/'+t.id} onClick={(e)=>{ // a태그에도 id 생성 {t.id}가 id
+//           e.preventDefault();
+//           props.onChangeMode(e.target.id); // e의 타겟 의 id a가 타겟 그 id를 지정 -> t.id
+//         }}>{t.title}</a> 그리고 {t.body}
+//       </li>
+//       ); 
+//   }
+
+//   return (
+//     <nav>
+//       <ol>
+//         {/* 배열에 들어간 객체를 li태그로 나타낸다  */}
+//         {lis}
+//       </ol>
+//   </nav>
+//   )
+// }
+
+// //-----------------------------------------------------------------------------------------------------------
+
+// // Article 컴포넌트 생성
+// function Article(props){
+//   return(
+//     <article>
+//       <h2>{props.titleName}</h2>
+//       <p>{props.body}</p>
+//     </article>
+//   )
+// }
+
+// //-----------------------------------------------------------------------------------------------------------
+
+// 모든 컴포넌트는 명 반드시 대문자로 시작
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const topics = [
+    {id:1, title:"html", body:"html is ..."},
+    {id:2, title:"css", body:"css is ..."},
+    {id:3, title:"javascript", body:"javascript is ..."},
+  ];
+  return ( // js와 html이 섞이는 구간 JSX
+    <>
+      {/* Header 컴포넌트 호출  Header(); 괄호 안 데이터 없이 호출한것과 같음 */}
+      {/* 태그에 속성을 넣듯이 하고, 이름과 값은 내맘대로 ???="???" 데이터를 넣어줄 수 있다 */}
+      {/* 함수 넣기 onChangeMode 어떤이름이든 상관없다 */}
+      <Head title="ReAct" desc="React is ...." onChangeMode={()=>{alert("Header");}}></Head>
+
+      {/*Nav 컴포넌트 호출*/}
+      {/* 배열을 넘기기 */}
+      <Nav topics={topics} onChangeMode={(id)=>{ alert(id);}}></Nav>
+
+      {/* Article 컴포넌트 호출 */}
+      {/* 2번 찍힐수 있다 */}
+      <Art titleName="Wlecom" body="nice Web"></Art>
+      <Art titleName="React" body="Try"></Art>
+
+      <Article articleTitle="my" list="study"></Article>
+      <Article articleTitle="스스로" list="해보기"></Article>
+    </>
   );
 }
 
-export default App;
+
+
+
+
+
+//---------------------------------------------------------------------------------
+
+// function App(){
+//   let desc='';
+//   const loginYn= 'Y'
+//   if(loginYn ==='Y'){
+//     desc = <div>홍창기 입니다.</div>;
+//   }else{
+//     desc = <div>비회원 입니다</div>;
+//   }
+
+//   return(
+//     <>
+//       {desc}
+//     </>
+//   )
+// }
+
+//---------------------------------------------------------------------------------
+// 삼항연산자
+
+// function App(){
+//   const loginYn ='Y';
+//   return(
+//     <>
+//       <div>
+//       {loginYn === 'Y' ? (<div>홍창기 입니다.</div>) : (<div>비회원 입니다</div>)}
+//       </div>
+//     </>
+//   );
+// }
+
+//---------------------------------------------------------------------------------
+
+// function App(){
+//   const loginYn = 'Y';
+//   return(
+//     <>
+//       <div>
+//         {loginYn === 'Y' && <div>홍창기입니다</div>}
+//       </div>
+//     </>
+//   )
+// }
+
+//---------------------------------------------------------------------------------
+
+// function App(){
+//   const loginYn = 'Y'
+
+//   return(
+//     <>
+//       { // 함수 정의하기
+//         (()=>{
+//           if(loginYn === 'Y'){
+//             return (<div>홍창기 입니다</div>);
+//           }else{
+//             return (<div>비회워 입니다</div>);
+//           }
+//         })() // (()=>{})() <- 괄호로 정의를 한뒤 정의한 내용을 호출
+//       }
+//     </>
+//   )
+// }
+
+//---------------------------------------------------------------------------------
+// - 하이푼으로 사용이 안된다 html 속성 이름 대신 camelCase 프로퍼티 사용
+
+// function App(){
+//   const style ={ // 스타일은 함수 정의
+//     backgroundColor:'green',
+//     fontSize:'12px'
+//   }
+//   return(
+//     <div style={style}>Hello, Jun Hong</div>
+//   );
+// }
+
+// a 링크 특 무조건 새로고침 이걸 막아줘야합니다
+
+export default App; // 외부에 제공
