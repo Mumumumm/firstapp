@@ -11,7 +11,8 @@ function Header(props){ // {title : "ReAct", onChangeMode:(()=>{alert("Header")}
             e.preventDefault();
             // elart 기능 실행
             props.onChangeMode();
-            }}>{props.desc}</a></h1>
+            }}>{props.title}</a></h1>
+            <h1><a href="https://www.naver.com/">{props.desc}</a></h1>
             
             {/* <h1><a href="/">{props.desc}</a></h1>  */}
         </header>
