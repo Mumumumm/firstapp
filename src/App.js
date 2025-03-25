@@ -121,7 +121,7 @@ function App() {
       {/* Header 컴포넌트 호출  Header(); 괄호 안 데이터 없이 호출한것과 같음 */}
       {/* 태그에 속성을 넣듯이 하고, 이름과 값은 내맘대로 ???="???" 데이터를 넣어줄 수 있다 */}
       {/* 함수 넣기 onChangeMode 어떤이름이든 상관없다 */}
-      <Header title="ReAct" desc="React is ...." onChangeMode={()=>{
+      <Header title="ReAct" desc="React is ...." name="nice" onChangeMode={()=>{
         setMode("WELCOME");
       }}></Header>
 

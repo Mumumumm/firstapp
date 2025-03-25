@@ -11,7 +11,7 @@ function Header(props){ // {title : "ReAct", onChangeMode:(()=>{alert("Header")}
             e.preventDefault();
             // elart 기능 실행
             props.onChangeMode();
-            }}>{props.title}</a></h1>
+            }}>{props.desc}</a></h1>
             
             {/* <h1><a href="/">{props.desc}</a></h1>  */}
         </header>
