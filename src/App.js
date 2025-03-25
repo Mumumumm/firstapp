@@ -5,8 +5,11 @@ import Nav from "./Nav";
 import Article from "./Article";
 
 import Head from './Head';
-import Art from './Art';
+// import Art from './Art';
 import Navigator from './Navigator';
+import ControlPanel from './Controlpanel';
+
+import Counter from "./Counter";
 
 // // Header컴포넌트 생성
 // // props 로 데이터 전달 받기
@@ -71,36 +74,73 @@ import Navigator from './Navigator';
 // 모든 컴포넌트는 명 반드시 대문자로 시작
 
 function App() {
+  let mode = 'WELCOME'
+
   const topics = [
     {id:1, title:"html", body:"html is ..."},
     {id:2, title:"css", body:"css is ..."},
     {id:3, title:"javascript", body:"javascript is ..."},
   ];
+
+  let content = null;
+
+  if(mode === "WELCOME"){
+    content = <Article articleTitle="Welcome" list="Hello, web"></Article>
+  }else if(mode === "READ"){
+    content = <Article articleTitle="Welcome" list="Hello, read"></Article>
+  }
+
+
+
+
   return ( // js와 html이 섞이는 구간 JSX
     <>
       {/* Header 컴포넌트 호출  Header(); 괄호 안 데이터 없이 호출한것과 같음 */}
       {/* 태그에 속성을 넣듯이 하고, 이름과 값은 내맘대로 ???="???" 데이터를 넣어줄 수 있다 */}
       {/* 함수 넣기 onChangeMode 어떤이름이든 상관없다 */}
-      <Head title="ReAct" desc="React is ...." onChangeMode={()=>{alert("Header");}}></Head>
+      <Header title="ReAct" desc="React is ...." onChangeMode={()=>{
+        mode = "WELCOME";
+      }}></Header>
 
       {/*Nav 컴포넌트 호출*/}
       {/* 배열을 넘기기 */}
-      <Navigator topics={topics} onChangeMode={(id)=>{ alert(id);}}></Navigator>
+      <Navigator topics={topics} onChangeMode={(id)=>{ 
+        mode = "READ";
+      }}></Navigator>
 
       {/* Article 컴포넌트 호출 */}
       {/* 2번 찍힐수 있다 */}
-      <Art titleName="Wlecom" body="nice Web"></Art>
-      <Art titleName="React" body="Try"></Art>
 
-      <Article articleTitle="my" list="study"></Article>
-      <Article articleTitle="스스로" list="해보기"></Article>
+      {/* <Art titleName="Wlecom" body="nice Web"></Art>
+      <Art titleName="React" body="Try"></Art> */}
+      
+      {content} 
+      {/* <Article articleTitle="my" list="study"></Article> */}
+      {/* <Article articleTitle="스스로" list="해보기"></Article> */}
+
+      <Counter />
+      <Counter />
+      <Counter />
+      <Counter />
     </>
   );
 }
 
 
+//----------------------------------------------------------------------------------------------------------------
+  //Event
+  // function App(){
+    // function handleclick (){
+    //   alert("버튼을 눌렀어용");
+    // }
+    // return <button onClick={handleclick}>버튼클릭</button>
 
 
+      // return <ControlPanel />;
+    // };
+
+
+  // export default App
 
 
 //---------------------------------------------------------------------------------
