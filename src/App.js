@@ -76,6 +76,7 @@ import Create from './Create';
 // 모든 컴포넌트는 명 반드시 대문자로 시작
 
 function App() {
+
   const [mode, setMode] = useState("WELCOME");
   const [id, setId] = useState(0); // state 생성 useState가 id에 누적
   const [topics, setTopics] = useState([ // 배열을 통으로 만들어주기 state
@@ -153,6 +154,8 @@ function App() {
         setMode("CREATE");
         
       }}>Create</a>
+
+      <ControlPanel></ControlPanel>
     </>
   );
 }
