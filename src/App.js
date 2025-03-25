@@ -10,6 +10,8 @@ import Navigator from './Navigator';
 import ControlPanel from './Controlpanel';
 
 import Counter from "./Counter";
+import { useState } from 'react';
+import Create from './Create';
 
 // // Header컴포넌트 생성
 // // props 로 데이터 전달 받기
@@ -74,20 +76,41 @@ import Counter from "./Counter";
 // 모든 컴포넌트는 명 반드시 대문자로 시작
 
 function App() {
-  let mode = 'WELCOME'
-
-  const topics = [
+  const [mode, setMode] = useState("WELCOME");
+  const [id, setId] = useState(0); // state 생성 useState가 id에 누적
+  const [topics, setTopics] = useState([ // 배열을 통으로 만들어주기 state
     {id:1, title:"html", body:"html is ..."},
     {id:2, title:"css", body:"css is ..."},
     {id:3, title:"javascript", body:"javascript is ..."},
-  ];
+  ]);
+
 
   let content = null;
 
-  if(mode === "WELCOME"){
+  if(mode === "WELCOME"){ // 웰컴에서
     content = <Article articleTitle="Welcome" list="Hello, web"></Article>
-  }else if(mode === "READ"){
-    content = <Article articleTitle="Welcome" list="Hello, read"></Article>
+  }else if(mode === "READ"){ // 리드에서
+    let title, body;
+    for(let topic of topics){
+      if(topic.id === Number(id)){
+        title = topic.title;
+        body = topic.body;
+        break;
+      }
+    }
+    content = <Article articleTitle={title} list={body}></Article>
+  }else if(mode === "CREATE"){  // 크레이트에서
+    content = <Create onCreate={(_title, _body)=>{
+      let newTopic = {id: topics.length + 1, title: _title, body: _body};
+      let newTopics = [...topics, newTopic];
+      setTopics(newTopics);
+      setId(newTopic.id);
+      setMode("READ");
+      // newTopics.push(newTopic);
+      // for(let t of topics){
+      // newTopic.push(t);
+      // }
+    }}></Create>
   }
 
 
@@ -99,13 +122,15 @@ function App() {
       {/* 태그에 속성을 넣듯이 하고, 이름과 값은 내맘대로 ???="???" 데이터를 넣어줄 수 있다 */}
       {/* 함수 넣기 onChangeMode 어떤이름이든 상관없다 */}
       <Header title="ReAct" desc="React is ...." onChangeMode={()=>{
-        mode = "WELCOME";
+        setMode("WELCOME");
       }}></Header>
 
       {/*Nav 컴포넌트 호출*/}
       {/* 배열을 넘기기 */}
-      <Navigator topics={topics} onChangeMode={(id)=>{ 
-        mode = "READ";
+      <Navigator topics={topics} onChangeMode={(_id)=>{
+        setId(_id);
+        setMode("READ");
+        
       }}></Navigator>
 
       {/* Article 컴포넌트 호출 */}
@@ -114,14 +139,20 @@ function App() {
       {/* <Art titleName="Wlecom" body="nice Web"></Art>
       <Art titleName="React" body="Try"></Art> */}
       
-      {content} 
+      {content}
       {/* <Article articleTitle="my" list="study"></Article> */}
       {/* <Article articleTitle="스스로" list="해보기"></Article> */}
 
+      {/* <Counter />
       <Counter />
       <Counter />
-      <Counter />
-      <Counter />
+      <Counter /> */}
+
+      <a href="/Create</>" onClick={(e)=>{
+        e.preventDefault();
+        setMode("CREATE");
+        
+      }}>Create</a>
     </>
   );
 }
