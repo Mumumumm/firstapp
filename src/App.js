@@ -12,6 +12,7 @@ import ControlPanel from './Controlpanel';
 import Counter from "./Counter";
 import { useState } from 'react';
 import Create from './Create';
+import Update from './Update';
 
 // // Header컴포넌트 생성
 // // props 로 데이터 전달 받기
@@ -87,10 +88,12 @@ function App() {
 
 
   let content = null;
+  let contextContorl = null;
 
   if(mode === "WELCOME"){ // 웰컴에서
     content = <Article articleTitle="Welcome" list="Hello, web"></Article>
-  }else if(mode === "READ"){ // 리드에서
+  }
+  else if(mode === "READ"){ // 리드에서
     let title, body;
     for(let topic of topics){
       if(topic.id === Number(id)){
@@ -100,7 +103,12 @@ function App() {
       }
     }
     content = <Article articleTitle={title} list={body}></Article>
-  }else if(mode === "CREATE"){  // 크레이트에서
+    contextContorl = <li><a href={"/update/" + id} onClick={(e)=>{
+      e.preventDefault();
+      setMode("UPDATE");
+    }}>Up Date</a></li>
+  }
+  else if(mode === "CREATE"){  // 크리에이트에서
     content = <Create onCreate={(_title, _body)=>{
       let newTopic = {id: topics.length + 1, title: _title, body: _body};
       let newTopics = [...topics, newTopic];
@@ -113,8 +121,32 @@ function App() {
       // }
     }}></Create>
   }
+  else if(mode === "UPDATE"){
+    let topic = topics.find((t)=>t.id === Number(id));
 
+    // let topic = null;
+    // for(let t of topics){ // topics 배열 객체를 전부 돌아보기
+    //   if(t.id === Number(id)){ // t의 id가 현재 id와 같은지
+    //     topic = t;
+    //     break;
+    //   }
+    // }
 
+    // const newTopic = {id, title, body}; 는 const newTopic = {id:id, title:title, body:body};
+    // ...뿌리기
+    content = <Update title={topic.title}  body={topic.body} onUpdate={(title, body)=>{
+      const updateTopic = {id:Number(id), title, body};
+      const updateTopics = [...topics];
+      for(let i=0; i < updateTopics.length ; i++){
+        if(updateTopics[i].id === Number(id)){
+          updateTopics[i] = updateTopic;
+          break;
+        }
+      }
+      setTopics(updateTopics);
+      setMode("READ");
+    }}></Update>
+  }
 
 
   return ( // js와 html이 섞이는 구간 JSX
@@ -144,18 +176,16 @@ function App() {
       {/* <Article articleTitle="my" list="study"></Article> */}
       {/* <Article articleTitle="스스로" list="해보기"></Article> */}
 
-      {/* <Counter />
-      <Counter />
-      <Counter />
-      <Counter /> */}
+      {/* <Counter >*/}
 
-      <a href="/Create</>" onClick={(e)=>{
+
+      <li><a href="/Create</>" onClick={(e)=>{
         e.preventDefault();
         setMode("CREATE");
-        
-      }}>Create</a>
+      }}>Create</a></li>
+      {contextContorl}
 
-      <ControlPanel></ControlPanel>
+      {/* <ControlPanel></ControlPanel> */}
     </>
   );
 }
